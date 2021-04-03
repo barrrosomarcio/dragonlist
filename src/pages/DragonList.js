@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import Dragao from '../img/dragon.jpeg';
+import DragonCard from '../components/DragonCard';
 
 class DragonList extends Component {
   constructor(props){
@@ -9,25 +9,13 @@ class DragonList extends Component {
   
     this.getapi = this.getapi.bind(this);
     this.createDragon = this.createDragon.bind(this);
-    this.deleteDragon = this.deleteDragon.bind(this);
 
     this.state = {
       dragons:[]
     }
   }
 
-  deleteDragon(event){
-    const { name } = event.target;
-    axios.delete(`http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon/${name}`)
-    .then(response => {
-      console.log(response);
-      this.getapi();
-    });
-    
-  }
-
   async createDragon(){
-    const { history } = this.props;
     axios.post(`http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon`)
     .then(response => {
       console.log(response);
@@ -75,39 +63,8 @@ class DragonList extends Component {
           <div className="dragon-list">
             {
               dragons.map((dragon) => {
-                const path = `/details/${dragon.id}`;
                 return(
-                  <div
-                    className="dragon-info"
-                    key={ dragon.id }
-                  >
-                    <img src={ Dragao } alt="dragão"/>
-                    <h3>{ dragon.name }</h3>
-                    <button
-                      alt="Ver Detalhes"
-                      onClick={() =>{
-                        history.push(path);
-                      }}
-                      >
-                      +
-                    </button>
-                    <button
-                      alt="Editar"
-                      name={ dragon.id }
-                      onClick={ () => {
-                        history.push(`/Edit/${dragon.id}`)
-                      } }
-                      >
-                      E
-                    </button>
-                    <button
-                      alt="Deletar Dragao"
-                      name={ dragon.id }
-                      onClick={ this.deleteDragon }
-                      >
-                      X
-                    </button>
-                  </div>
+                  <DragonCard dragon={ dragon } getapi={ this.getapi }/>
                 );
               })
             }
