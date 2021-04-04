@@ -18,7 +18,6 @@ class DragonList extends Component {
   async createDragon(){
     axios.post(`http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon`)
     .then(response => {
-      console.log(response);
       this.getapi();
     });
   }
@@ -63,8 +62,13 @@ class DragonList extends Component {
           <div className="dragon-list">
             {
               dragons.map((dragon) => {
+                const { id } = dragon;
                 return(
-                  <DragonCard dragon={ dragon } getapi={ this.getapi }/>
+                  <DragonCard
+                    key={ id }
+                    dragon={ dragon }
+                    getapi={ this.getapi }
+                  />
                 );
               })
             }

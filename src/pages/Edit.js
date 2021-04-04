@@ -38,9 +38,6 @@ class Edit extends Component {
     dragon.name = newname;
     dragon.type = newtype;
     axios.put(`http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon/${id}`, dragon)
-    .then(response => {
-      console.log(response);
-    })
     history.push('/dragons');
   }
   
